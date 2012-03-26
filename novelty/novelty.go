@@ -60,12 +60,12 @@ func init() {
 
   addRoute("/yes", "GET", func(w http.ResponseWriter, r *http.Request) {
     answer = "yes"
-    http.Redirect(w, r, "", http.StatusFound)
+    http.Redirect(w, r, "/", http.StatusFound)
   })
 
   addRoute("/no", "GET", func(w http.ResponseWriter, r *http.Request) {
     answer = "no"
-    http.Redirect(w, r, "", http.StatusFound)
+    http.Redirect(w, r, "/", http.StatusFound)
   })
 
   http.HandleFunc("/", router)
