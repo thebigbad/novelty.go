@@ -1,0 +1,8 @@
+<html>
+  <head>
+    <title>{{html .Question}}</title>
+  </head>
+  <body>
+    <h1>{{html .Answer}}</h1>
+  </body>
+</html>
