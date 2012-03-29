@@ -1,8 +1,36 @@
 <html>
   <head>
-    <title>Is Ryan at the Office?</title>
+    <title>{{html .Answer}}.</title>
+    <style>
+      body {
+        background-color: white;
+        text-align: center;
+      }
+      .answer {
+        padding: 0;
+        margin: 0;
+        font-size: 400px;
+        line-height: 50%;
+      }
+      @media screen and (max-width: 768px) {
+        .answer {
+          font-size: 280px;
+        }
+      }
+      @media screen and (max-width: 460px) {
+        .answer {
+          font-size: 190px;
+        }
+      }
+      @media screen and (max-width: 320px) {
+        .answer {
+          font-size: 160px;
+        }
+      }
+    </style>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0">
   </head>
   <body>
-    <h1>{{html .Answer}}</h1>
+    <p class="answer">{{html .Answer}}.</p>
   </body>
 </html>
