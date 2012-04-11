@@ -1,8 +1,3 @@
-* readme
-* use post instead of get for editing
-* basic auth for editing
-* backend replication to survive instance restarts
-* styling for index.template
 * make sure we're sending right content types
 * html error pages
-* env variables for question, basic auth header
+* salt password?
