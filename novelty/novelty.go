@@ -1,40 +1,47 @@
 package novelty
 
 import (
-  "http"
-  "novelty/router"
-  "template"
+	"appengine"
+	"appengine/datastore"
+	"html/template"
+	"net/http"
 )
 
-var answer = "yes"
-var rootTemplate = template.Must(template.New("").ParseFile("index.template"))
-
-type Context struct{
-  Answer string
+type Answer struct {
+	Value string
 }
 
 func init() {
-  router := router.Router{}
-  router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-    // TODO: Is there a way to skip the type and use an inline struct?
-    context := Context{ Answer: answer }
-    err := rootTemplate.Execute(w, context)
-    if err != nil {
-      http.Error(w, err.String(), http.StatusInternalServerError)
-    }
-  })
+	http.HandleFunc("/", getAnswer)
+	http.HandleFunc("/yes", setAnswer("yes"))
+	http.HandleFunc("/no", setAnswer("no"))
+}
 
-  router.Get("/yes", func(w http.ResponseWriter, r *http.Request) {
-    answer = "yes"
-    http.Redirect(w, r, "/", http.StatusFound)
-  })
+func getAnswer(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	k := datastore.NewKey(c, "Answer", "answer", 0, nil)
+	a := new(Answer)
+	if err := datastore.Get(c, k, a); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	t := template.Must(template.ParseFiles("index.template"))
+	if err := t.Execute(w, a); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
 
-  router.Get("/no", func(w http.ResponseWriter, r *http.Request) {
-    answer = "no"
-    http.Redirect(w, r, "/", http.StatusFound)
-  })
-
-  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    router.HandleRequest(w, r)
-  })
+func setAnswer(answer string) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		c := appengine.NewContext(r)
+		k := datastore.NewKey(c, "Answer", "answer", 0, nil)
+		a := Answer{
+			Value: answer,
+		}
+		if _, err := datastore.Put(c, k, &a); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, "/", http.StatusFound)
+	}
 }

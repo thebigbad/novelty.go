@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>{{html .Answer}}.</title>
+    <title>{{html .Value}}.</title>
     <style>
       body {
         background-color: white;
@@ -31,6 +31,6 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
   </head>
   <body>
-    <p class="answer">{{html .Answer}}.</p>
+    <p class="answer">{{html .Value}}.</p>
   </body>
 </html>
