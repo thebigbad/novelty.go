@@ -3,10 +3,10 @@ package novelty
 import (
 	"appengine"
 	"appengine/datastore"
-  "encoding/base64"
+	"encoding/base64"
 	"html/template"
 	"net/http"
-  "strings"
+	"strings"
 )
 
 type Answer struct {
@@ -38,39 +38,39 @@ func getAnswer(w http.ResponseWriter, r *http.Request) {
 }
 
 func authorized(r *http.Request) bool {
-  h := r.Header.Get("Authorization")
-  if !strings.HasPrefix(h, "Basic ") {
-    return false
-  }
-  a, _ := base64.StdEncoding.DecodeString(strings.TrimLeft(h, "Basic "))
-  fs := strings.Split(string(a), ":")
-  if len(fs) != 2 {
-    return false
-  }
+	h := r.Header.Get("Authorization")
+	if !strings.HasPrefix(h, "Basic ") {
+		return false
+	}
+	a, _ := base64.StdEncoding.DecodeString(strings.TrimLeft(h, "Basic "))
+	fs := strings.Split(string(a), ":")
+	if len(fs) != 2 {
+		return false
+	}
 	c := appengine.NewContext(r)
 	k := datastore.NewKey(c, "Password", "password", 0, nil)
 	p := new(Password)
 	if err := datastore.Get(c, k, p); err != nil {
-    // If password is not set, seed with whatever password was passed in.
-    // See: http://golang.org/misc/dashboard/app/build/key.go
-    dp := Password{
-      Value: fs[1],
-    }
-    if _, err := datastore.Put(c, k, &dp); err != nil {
-      return false
-    }
-    return true
+		// If password is not set, seed with whatever password was passed in.
+		// See: http://golang.org/misc/dashboard/app/build/key.go
+		dp := Password{
+			Value: fs[1],
+		}
+		if _, err := datastore.Put(c, k, &dp); err != nil {
+			return false
+		}
+		return true
 	}
-  return p.Value == fs[1]
+	return p.Value == fs[1]
 }
 
 func setAnswer(answer string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-    if !authorized(r) {
-      w.Header().Set("WWW-Authenticate", "Basic realm=\"novelty.go\"")
-      http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		if !authorized(r) {
+			w.Header().Set("WWW-Authenticate", "Basic realm=\"novelty.go\"")
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
-    }
+		}
 		c := appengine.NewContext(r)
 		k := datastore.NewKey(c, "Answer", "answer", 0, nil)
 		a := Answer{
