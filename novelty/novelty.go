@@ -3,10 +3,9 @@ package novelty
 import (
 	"appengine"
 	"appengine/datastore"
-	"encoding/base64"
+  "basicauth"
 	"html/template"
 	"net/http"
-	"strings"
 )
 
 type Answer struct {
@@ -39,12 +38,8 @@ func getAnswer(w http.ResponseWriter, r *http.Request) {
 
 func authorized(r *http.Request) bool {
 	h := r.Header.Get("Authorization")
-	if !strings.HasPrefix(h, "Basic ") {
-		return false
-	}
-	a, _ := base64.StdEncoding.DecodeString(strings.TrimLeft(h, "Basic "))
-	fs := strings.Split(string(a), ":")
-	if len(fs) != 2 {
+  _, password, err := basicauth.Decode(h)
+  if err != nil {
 		return false
 	}
 	c := appengine.NewContext(r)
@@ -54,14 +49,14 @@ func authorized(r *http.Request) bool {
 		// If password is not set, seed with whatever password was passed in.
 		// See: http://golang.org/misc/dashboard/app/build/key.go
 		dp := Password{
-			Value: fs[1],
+			Value: password,
 		}
 		if _, err := datastore.Put(c, k, &dp); err != nil {
 			return false
 		}
 		return true
 	}
-	return p.Value == fs[1]
+	return p.Value == password
 }
 
 func setAnswer(answer string) func(w http.ResponseWriter, r *http.Request) {

@@ -1,7 +1,7 @@
 Setup
 ===
 
-1. Get your [dev environment](https://developers.google.com/appengine/docs/go/gettingstarted/devenvironment) setup for GAE. It comes with a version of Go, so don't worry about compiling/installing that.
+1. Get your [dev environment](https://developers.google.com/appengine/docs/go/gettingstarted/devenvironment) setup for GAE.
 2. Clone this repository, cd into the directory.
 3. ```cp app.yaml.example app.yaml```
 4. Edit app.yaml with the app name you plan to use.
@@ -18,6 +18,12 @@ Your novelty server is ready to go. The answer is current set to "yes", and the
 password for changing the answer is "bees".
 
 To change the answer to "no", simply visit larry:bees@localhost:8080/no
+
+Running tests
+===
+
+1. Install go.
+2. ```$ cd basicauth/ && go test```
 
 Running on appspot
 ===
