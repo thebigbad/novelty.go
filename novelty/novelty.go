@@ -3,7 +3,7 @@ package novelty
 import (
 	"appengine"
 	"appengine/datastore"
-  "basicauth"
+	"basicauth"
 	"html/template"
 	"net/http"
 )
@@ -38,8 +38,8 @@ func getAnswer(w http.ResponseWriter, r *http.Request) {
 
 func authorized(r *http.Request) bool {
 	h := r.Header.Get("Authorization")
-  _, password, err := basicauth.Decode(h)
-  if err != nil {
+	_, password, err := basicauth.Decode(h)
+	if err != nil {
 		return false
 	}
 	c := appengine.NewContext(r)
