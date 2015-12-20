@@ -93,3 +93,8 @@ Sample Benchmarks
       98%    437
       99%    446
      100%    756 (longest request)
+
+License
+===
+
+novelty.go is released under the MIT license. See LICENSE for more details.
