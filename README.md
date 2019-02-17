@@ -1,3 +1,12 @@
+novelty.go
+==
+
+Single word (yes/no) site for app engine in go.
+There's a copy running at https://isryanattheoffice.com.
+Uses basic auth for updating answer, to make it easy to wire up to IFTTT,
+Tasker, etc.
+Uses fancy new (circa 7 years ago) responsive design, to scale based on screen size.
+
 Setup
 ===
 
@@ -30,6 +39,10 @@ Running on appspot
 
 Deploying automatically with Cloud Build (optional)
 ===
+
+I use Cloud Build to deploy this app to https://isryanattheoffice.com/ on push
+to this github repo. I do a little fiddling with sed and substitution variables
+in order to keep the password out of this repo.
 
 1. Follow the
    [getting started](https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories#grant_gae_name_access_to_the_builder_name_service_account)
