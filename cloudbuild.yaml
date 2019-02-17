@@ -1,0 +1,12 @@
+steps:
+- name: 'ubuntu'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    cat app.yaml.example | sed "s/EXAMPLE_PASSWORD/${_PASSWORD}/" > app.yaml 
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy"]
+timeout: "1600s"
+substitutions: 
+  _PASSWORD: EXAMPLE_SUBSTITUTION
