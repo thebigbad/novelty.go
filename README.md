@@ -27,7 +27,7 @@ Running locally
 Your novelty server is ready to go. The answer is currently set to "no".
 
 To change the answer to "yes", simply visit
-http://larry:EXAMPLE_PASSWORD@localhost:8080/no
+http://larry:EXAMPLE_PASSWORD@localhost:8080/yes
 
 Running on appspot
 ===
