@@ -1,10 +1,11 @@
 novelty.go
 ==
 
-Single word (yes/no) site for app engine in go.
-There's a copy running at https://isryanattheoffice.com.
+Single word (yes/no) site for app engine in go. Demo: https://isryanattheoffice.com.
+
 Uses basic auth for updating answer, to make it easy to wire up to IFTTT,
 Tasker, etc.
+
 Uses fancy new (circa 7 years ago) responsive design, to scale based on screen size.
 
 Setup
