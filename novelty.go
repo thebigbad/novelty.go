@@ -5,7 +5,7 @@ import (
 	"appengine/datastore"
 	"html/template"
 	"net/http"
-  "os"
+	"os"
 )
 
 type Answer struct {
@@ -38,11 +38,11 @@ func getAnswer(w http.ResponseWriter, r *http.Request) {
 
 func setAnswer(answer string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-    if _, p, ok := r.BasicAuth(); !ok || p != os.Getenv("PASSWORD") {
+		if _, p, ok := r.BasicAuth(); !ok || p != os.Getenv("PASSWORD") {
 			w.Header().Set("WWW-Authenticate", "Basic")
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
-    }
+		}
 		c := appengine.NewContext(r)
 		k := datastore.NewKey(c, "Answer", "answer", 0, nil)
 		a := Answer{
