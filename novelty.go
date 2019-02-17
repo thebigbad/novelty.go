@@ -5,6 +5,7 @@ import (
 	"appengine/datastore"
 	"html/template"
 	"net/http"
+  "os"
 )
 
 type Answer struct {
@@ -35,35 +36,13 @@ func getAnswer(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func authorized(r *http.Request) bool {
-  _, password, ok := r.BasicAuth()
-  if !ok {
-		return false
-	}
-	c := appengine.NewContext(r)
-	k := datastore.NewKey(c, "Password", "password", 0, nil)
-	p := new(Password)
-	if err := datastore.Get(c, k, p); err != nil {
-		// If password is not set, seed with whatever password was passed in.
-		// See: http://golang.org/misc/dashboard/app/build/key.go
-		dp := Password{
-			Value: password,
-		}
-		if _, err := datastore.Put(c, k, &dp); err != nil {
-			return false
-		}
-		return true
-	}
-	return p.Value == password
-}
-
 func setAnswer(answer string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if !authorized(r) {
+    if _, p, ok := r.BasicAuth(); !ok || p != os.Getenv("PASSWORD") {
 			w.Header().Set("WWW-Authenticate", "Basic")
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
-		}
+    }
 		c := appengine.NewContext(r)
 		k := datastore.NewKey(c, "Answer", "answer", 0, nil)
 		a := Answer{

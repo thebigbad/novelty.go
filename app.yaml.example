@@ -1,6 +1,9 @@
 runtime: go
 api_version: go1
 
+env_variables:
+  PASSWORD: 'EXAMPLE_PASSWORD'
+
 handlers:
--  url: /.*
-   script: _go_app
+- url: /.*
+  script: _go_app
