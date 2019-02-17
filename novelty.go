@@ -60,7 +60,7 @@ func authorized(r *http.Request) bool {
 func setAnswer(answer string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if !authorized(r) {
-			w.Header().Set("WWW-Authenticate", "Basic realm=\"novelty.go\"")
+			w.Header().Set("WWW-Authenticate", "Basic")
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
