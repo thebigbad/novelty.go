@@ -1,4 +1,4 @@
-package novelty
+package main
 
 import (
 	"appengine"
