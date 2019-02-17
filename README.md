@@ -25,7 +25,7 @@ Running on appspot
 1. Follow the
    [registration instuctions](https://developers.google.com/appengine/docs/go/gettingstarted/uploading)
    for GAE.
-2. Push the app: ```$ appcfg.py .```
+2. Push the app: ```$ gcloud app deploy```
 3. Visit http://$APPID.appspot.com/ to behold your new novelty server.
 
 Deploying automatically with Cloud Build (optional)
