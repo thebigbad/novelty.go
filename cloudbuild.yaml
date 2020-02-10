@@ -8,6 +8,7 @@ steps:
 # fetch dependencies
 - name: mirror.gcr.io/library/golang
   args: ['go', 'get', '-u', './...']
+  env: ['GOPATH=.']
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy"]
 timeout: "1600s"
