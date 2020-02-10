@@ -16,10 +16,11 @@ type Password struct {
 	Value string
 }
 
-func init() {
+func main() {
 	http.HandleFunc("/", getAnswer)
 	http.HandleFunc("/yes", setAnswer("yes"))
 	http.HandleFunc("/no", setAnswer("no"))
+	appengine.Main()
 }
 
 func getAnswer(w http.ResponseWriter, r *http.Request) {
