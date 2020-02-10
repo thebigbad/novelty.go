@@ -7,7 +7,7 @@ steps:
     cat app.yaml.example | sed "s/EXAMPLE_PASSWORD/${_PASSWORD}/" > app.yaml
 # fetch dependencies
 - name: mirror.gcr.io/library/golang
-  args: ['go', 'mod', 'init', '.']
+  args: ['go', 'mod', 'init', 'main']
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy"]
 timeout: "1600s"
