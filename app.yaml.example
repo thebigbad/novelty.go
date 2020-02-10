@@ -1,5 +1,4 @@
-runtime: go
-api_version: go111
+runtime: go111
 
 env_variables:
   PASSWORD: 'EXAMPLE_PASSWORD'
